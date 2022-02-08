@@ -1,0 +1,11 @@
+문제 없이 컴파일이 되고, 마우스의 움직인 위치에 따라 바늘이 움직임.
+
+2022.02.28. 확인 함.
+
+https://www.patreon.com/posts/tutorial-python-54060546
+
+example link :
+https://github.com/KhamisiKibet/QT-PyQt-PySide-Custom-Widgets/tree/main/examples/AnalogGaugeMeterWidget
+
+youtube link :
+https://youtu.be/5WHnlRQcUy4
