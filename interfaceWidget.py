@@ -23,7 +23,7 @@ class Ui_Form(object):
     ################################################################################################
     # FIRST GAUGE - SPEED METER
     ################################################################################################
-    def gaugeForm1(self, Form, Theme):
+    def gaugeForm1(self, Form, Theme, value):
         self.widget = AnalogGaugeWidget(Form)
         self.widget.setGeometry(QtCore.QRect(
             self.initX+self.width*0, self.initX, self.width, self.height))
@@ -45,10 +45,12 @@ class Ui_Form(object):
         ################################################################################################
         self.widget.setGaugeTheme(Theme)
 
+        self.widget.updateValueManual(value)
+
     ################################################################################################
     # SECOND GAUGE - VOLT METER
     ################################################################################################
-    def gaugeForm2(self, Form, Theme):
+    def gaugeForm2(self, Form, Theme, value):
         self.widget = AnalogGaugeWidget(Form)
         self.widget.setGeometry(QtCore.QRect(
             self.initX+self.width*1, self.initX, self.width, self.height))
@@ -70,10 +72,12 @@ class Ui_Form(object):
         ################################################################################################
         self.widget.setGaugeTheme(Theme)
 
+        self.widget.updateValueManual(value)
+
     ################################################################################################
     # THIRD GAUGE - CURRENT METER
     ################################################################################################
-    def gaugeForm3(self, Form, Theme):
+    def gaugeForm3(self, Form, Theme, value):
         self.widget = AnalogGaugeWidget(Form)
         self.widget.setGeometry(QtCore.QRect(
             self.initX+self.width*2, self.initX, self.width, self.height))
@@ -102,10 +106,12 @@ class Ui_Form(object):
         ################################################################################################
         self.widget.setGaugeTheme(Theme)
 
+        self.widget.updateValueManual(value)
+
     ################################################################################################
     # FORTH GAUGE - POWER METER
     ################################################################################################
-    def gaugeForm4(self, Form, Theme):
+    def gaugeForm4(self, Form, Theme, value):
         self.widget = AnalogGaugeWidget(Form)
         self.widget.setGeometry(QtCore.QRect(
             self.initX+self.width*3, self.initX, self.width, self.height))
@@ -126,6 +132,8 @@ class Ui_Form(object):
         # SET GAUGE THEME
         ################################################################################################
         self.widget.setGaugeTheme(Theme)
+
+        self.widget.updateValueManual(value)
 
     ################################################################################################
     # 원래 사용된 코드 

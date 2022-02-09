@@ -774,6 +774,30 @@ class AnalogGaugeWidget(QWidget):
     ################################################################################################
     # UPDATE VALUE
     ################################################################################################
+    #
+    #  입력받는 데이타로 값을 변경을 함
+    #  
+    def updateValueManual(self, value):
+        # if not mouse_controlled:
+        #     self.value = value
+        #
+        # if mouse_controlled:
+        #     self.valueChanged.emit(int(value))
+
+        if value <= self.minValue:
+            self.value = self.minValue
+        elif value >= self.maxValue:
+            self.value = self.maxValue
+        else:
+            self.value = value
+        # self.paintEvent("")
+        # self.valueChanged.emit(int(value))  # MOUSE EVENT 대한 응답.
+        # print(self.value)
+
+        # ohne timer: aktiviere self.update()
+        if not self.use_timer_event:
+            self.update()
+
     def updateValue(self, value, mouse_controlled=False):
         # if not mouse_controlled:
         #     self.value = value
@@ -1195,7 +1219,6 @@ class AnalogGaugeWidget(QWidget):
                 text = str(int((self.maxValue - self.minValue) / self.scalaCount * i))
             else :
                 text = "{0:.1f}".format((self.minValue + s_per_div_float * i))
-                print(text)
             # text = str(int(self.minValue + scale_per_div * i))
             w = fm.width(text) + 1
             h = fm.height()
@@ -1462,75 +1485,75 @@ class AnalogGaugeWidget(QWidget):
             self.draw_big_needle_center_point(
                 diameter=(self.widget_diameter / 6))
 
-    ###############################################################################################
-    # MOUSE EVENTS
-    ###############################################################################################
+    # ###############################################################################################
+    # # MOUSE EVENTS  - 기능 삭제.
+    # ###############################################################################################
 
-    def setMouseTracking(self, flag):
-        def recursive_set(parent):
-            for child in parent.findChildren(QObject):
-                try:
-                    child.setMouseTracking(flag)
-                except:
-                    pass
-                recursive_set(child)
+    # def setMouseTracking(self, flag):
+    #     def recursive_set(parent):
+    #         for child in parent.findChildren(QObject):
+    #             try:
+    #                 child.setMouseTracking(flag)
+    #             except:
+    #                 pass
+    #             recursive_set(child)
 
-        QWidget.setMouseTracking(self, flag)
-        recursive_set(self)
+    #     QWidget.setMouseTracking(self, flag)
+    #     recursive_set(self)
 
-    def mouseReleaseEvent(self, QMouseEvent):
-        self.NeedleColor = self.NeedleColorReleased
+    # def mouseReleaseEvent(self, QMouseEvent):
+    #     self.NeedleColor = self.NeedleColorReleased
 
-        if not self.use_timer_event:
-            self.update()
-        pass
+    #     if not self.use_timer_event:
+    #         self.update()
+    #     pass
 
-    ########################################################################
-    ## MOUSE LEAVE EVENT
-    ########################################################################
-    def leaveEvent(self, event):
-        self.NeedleColor = self.NeedleColorReleased
-        self.update()
+    # ########################################################################
+    # ## MOUSE LEAVE EVENT  - 기능 삭제.
+    # ########################################################################
+    # def leaveEvent(self, event):
+    #     self.NeedleColor = self.NeedleColorReleased
+    #     self.update()
 
-    def mouseMoveEvent(self, event):
-        x, y = event.x() - (self.width() / 2), event.y() - (self.height() / 2)
-        # print(event.x(), event.y(), self.width(), self.height())
-        if not x == 0:
-            angle = math.atan2(y, x) / math.pi * 180
-            # winkellaenge der anzeige immer positiv 0 - 360deg
-            # min wert + umskalierter wert
-            value = (float(math.fmod(angle - self.scale_angle_start_value + 720, 360)) /
-                     (float(self.scale_angle_size) / float(self.maxValue - self.minValue))) + self.minValue
-            temp = value
-            fmod = float(
-                math.fmod(angle - self.scale_angle_start_value + 720, 360))
-            state = 0
-            if (self.value - (self.maxValue - self.minValue) * self.valueNeedleSnapzone) <= \
-                    value <= \
-                    (self.value + (self.maxValue - self.minValue) * self.valueNeedleSnapzone):
-                self.NeedleColor = self.NeedleColorDrag
-                # todo: evtl ueberpruefen
-                #
-                state = 9
-                # if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
-                if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
-                    state = 1
-                    value = self.maxValue
-                    self.last_value = self.minValue
-                    self.valueChanged.emit(int(value))
+    # def mouseMoveEvent(self, event):
+        # x, y = event.x() - (self.width() / 2), event.y() - (self.height() / 2)
+        # # print(event.x(), event.y(), self.width(), self.height())
+        # if not x == 0:
+        #     angle = math.atan2(y, x) / math.pi * 180
+        #     # winkellaenge der anzeige immer positiv 0 - 360deg
+        #     # min wert + umskalierter wert
+        #     value = (float(math.fmod(angle - self.scale_angle_start_value + 720, 360)) /
+        #              (float(self.scale_angle_size) / float(self.maxValue - self.minValue))) + self.minValue
+        #     temp = value
+        #     fmod = float(
+        #         math.fmod(angle - self.scale_angle_start_value + 720, 360))
+        #     state = 0
+        #     if (self.value - (self.maxValue - self.minValue) * self.valueNeedleSnapzone) <= \
+        #             value <= \
+        #             (self.value + (self.maxValue - self.minValue) * self.valueNeedleSnapzone):
+        #         self.NeedleColor = self.NeedleColorDrag
+        #         # todo: evtl ueberpruefen
+        #         #
+        #         state = 9
+        #         # if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
+        #         if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
+        #             state = 1
+        #             value = self.maxValue
+        #             self.last_value = self.minValue
+        #             self.valueChanged.emit(int(value))
 
-                elif value >= self.maxValue >= self.last_value:
-                    state = 2
-                    value = self.maxValue
-                    self.last_value = self.maxValue
-                    self.valueChanged.emit(int(value))
+        #         elif value >= self.maxValue >= self.last_value:
+        #             state = 2
+        #             value = self.maxValue
+        #             self.last_value = self.maxValue
+        #             self.valueChanged.emit(int(value))
 
-                else:
-                    state = 3
-                    self.last_value = value
-                    self.valueChanged.emit(int(value))
+        #         else:
+        #             state = 3
+        #             self.last_value = value
+        #             self.valueChanged.emit(int(value))
 
-                self.updateValue(value)
+        #         self.updateValue(value)
 
 ################################################################################################
 # END ==>

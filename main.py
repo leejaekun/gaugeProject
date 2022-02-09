@@ -41,11 +41,14 @@ class MainWindow(QMainWindow):
         # 인스턴스 생성 
         self.ui = Ui_Form(width, height)
 
-        # gauge 생성 (Theme : 0 ~ 24)
-        self.ui.gaugeForm1(self, 5)
-        self.ui.gaugeForm2(self, 3)
-        self.ui.gaugeForm3(self, 5)
-        self.ui.gaugeForm4(self, 3)
+        # gauge 생성 (Theme : 0 ~ 24, value : 입력받은 수치)
+        # 입력받는 값을 바로 넣어주면 바늘이 움직임.
+        # 값을 여기서 변경을 할지 아니면 gaugeForm 안에서 변경을 할지.
+        # 슬롯을 써서 연동을 할지... 고민을 해야할 듯 함.
+        self.ui.gaugeForm1(self, 5, 100)
+        self.ui.gaugeForm2(self, 3, 150)
+        self.ui.gaugeForm3(self, 5, 0.3)
+        self.ui.gaugeForm4(self, 3, 999)
 
         ################################################################################################
         # Show window
