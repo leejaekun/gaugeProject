@@ -21,118 +21,46 @@ class Ui_Form(object):
         self.initY = 20
 
     ################################################################################################
-    # FIRST GAUGE - SPEED METER
+    # 하나로 사용하는 GAUGE 
     ################################################################################################
-    def gaugeForm1(self, Form, Theme, value):
+    def gaugeForm(self, Form, Theme, value, initX, initY, width, height, units, minValue, maxValue,\
+        setScalaCount, scala_subdiv_count, floatValue):
         self.widget = AnalogGaugeWidget(Form)
         self.widget.setGeometry(QtCore.QRect(
-            self.initX+self.width*0, self.initX, self.width, self.height))
+            initX, initY, width, height))
+        # self.initX+self.width*0, self.initX, self.width, self.height))
         self.retranslateUi(Form)
 
         ################################################################################################
         # GET GAUGE UNIT
         ################################################################################################
-        self.widget.units = "[r/min]"
+        self.widget.units = units
 
         ################################################################################################
         # SET MINIMUM AND MAXIMUM VALUE
         ################################################################################################
-        self.widget.minValue = 0
-        self.widget.maxValue = 120
+        self.widget.minValue = minValue
+        self.widget.maxValue = maxValue
 
         ################################################################################################
         # SET GAUGE THEME
         ################################################################################################
         self.widget.setGaugeTheme(Theme)
-
-        self.widget.updateValueManual(value)
-
-    ################################################################################################
-    # SECOND GAUGE - VOLT METER
-    ################################################################################################
-    def gaugeForm2(self, Form, Theme, value):
-        self.widget = AnalogGaugeWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(
-            self.initX+self.width*1, self.initX, self.width, self.height))
-        self.retranslateUi(Form)
-
-        ################################################################################################
-        # GET GAUGE UNIT
-        ################################################################################################
-        self.widget.units = "[V]"
-
-        ################################################################################################
-        # SET MINIMUM AND MAXIMUM VALUE
-        ################################################################################################
-        self.widget.minValue = 0
-        self.widget.maxValue = 400
-
-        ################################################################################################
-        # SET GAUGE THEME
-        ################################################################################################
-        self.widget.setGaugeTheme(Theme)
-
-        self.widget.updateValueManual(value)
-
-    ################################################################################################
-    # THIRD GAUGE - CURRENT METER
-    ################################################################################################
-    def gaugeForm3(self, Form, Theme, value):
-        self.widget = AnalogGaugeWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(
-            self.initX+self.width*2, self.initX, self.width, self.height))
-        self.retranslateUi(Form)
-
-        ################################################################################################
-        # GET GAUGE UNIT
-        ################################################################################################
-        self.widget.units = "[A]"
 
         ################################################################################################
         # SET SCALE VALUE
         ################################################################################################
-        self.widget.setScalaCount(10)
-        self.widget.scala_subdiv_count = 1
+        self.widget.setScalaCount(setScalaCount)
+        self.widget.scala_subdiv_count = scala_subdiv_count
+        self.widget.floatValue = True   # float 출력됨.
 
         ################################################################################################
         # SET MINIMUM AND MAXIMUM VALUE
         ################################################################################################
-        self.widget.minValue = 0
-        self.widget.maxValue = 5
-        self.widget.floatValue = True
-
-        ################################################################################################
-        # SET GAUGE THEME
-        ################################################################################################
-        self.widget.setGaugeTheme(Theme)
-
-        self.widget.updateValueManual(value)
-
-    ################################################################################################
-    # FORTH GAUGE - POWER METER
-    ################################################################################################
-    def gaugeForm4(self, Form, Theme, value):
-        self.widget = AnalogGaugeWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(
-            self.initX+self.width*3, self.initX, self.width, self.height))
-        self.retranslateUi(Form)
-
-        ################################################################################################
-        # GET GAUGE UNIT
-        ################################################################################################
-        self.widget.units = "[W]"
-
-        ################################################################################################
-        # SET MINIMUM AND MAXIMUM VALUE
-        ################################################################################################
-        self.widget.minValue = 0
-        self.widget.maxValue = 2000
-
-        ################################################################################################
-        # SET GAUGE THEME
-        ################################################################################################
-        self.widget.setGaugeTheme(Theme)
-
+        self.widget.minValue = minValue
+        self.widget.maxValue = maxValue
+        self.widget.floatValue = floatValue
+        
         self.widget.updateValueManual(value)
 
     ################################################################################################

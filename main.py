@@ -5,6 +5,7 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QHBoxLayout
 from PyQt5.QtGui import QFont, QFontDatabase
+from numpy import False_
 
 # ################################################################################################
 # # Convert UI to PyQt5 py file
@@ -31,30 +32,50 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('My First Gauge Application')
         self.move(300, 300)
 
-        # gauge 크기를 재배치함. 대충.
-        width = 320   
+        ################################################################################################
+        # gauge 크기를 재배치함.
+        ################################################################################################
+        width = 300   
         height = 300   
-        
-        #gauge 크기에 따라서... 전체 화면 크기 조정을 함
-        self.resize(width*4.2, height*2)  
+        initX = 20  # 게이지의 초기 위치.
+        initY = 20  # 게이지의 초기 위치.
+        ################################################################################################
+        # 게이지 크기에 따라서... 전체 화면 크기 조정을 함
+        ################################################################################################
+        self.resize(initX+(initX+width)*4, height*2)  
 
-        # 인스턴스 생성 
-        self.ui = Ui_Form(width, height)
+        ################################################################################################
+        # 인스턴스 생성
+        ################################################################################################
+        self.gauge = Ui_Form(width, height)
 
-        # gauge 생성 (Theme : 0 ~ 24, value : 입력받은 수치)
-        # 입력받는 값을 바로 넣어주면 바늘이 움직임.
         # 값을 여기서 변경을 할지 아니면 gaugeForm 안에서 변경을 할지.
         # 슬롯을 써서 연동을 할지... 고민을 해야할 듯 함.
-        self.ui.gaugeForm1(self, 5, 100)
-        self.ui.gaugeForm2(self, 3, 150)
-        self.ui.gaugeForm3(self, 5, 0.3)
-        self.ui.gaugeForm4(self, 3, 999)
+        ################################################################################################
+        # def gaugeForm(self, Form, Theme, value, initX, initY, width, height, units, 
+        # minValue, maxValue,setScalaCount, scala_subdiv_count, floatValue): 
+        # Theme : 0 ~ 24 선택해서 사용함.
+        # value : 게이지에 입력되는 값.
+        # initX, initY, width, height : 초기위치 가로 세로 크기 
+        # units : 게이지에 표시할 단위값. 문자값.
+        # minValue, maxValue : 게이지의 최소값/최대값
+        # setScalaCount : 최소/최대 나누기 단계 카운트
+        # scala_subdiv_count : 잘은 모르겠음. 원본 파일은 찾아봐야 할 듯.
+        # floatValue : 출력값에 소수가 필요한 경우. 일단 0.1 단위로 출력함.
+        ################################################################################################
+        self.gauge.gaugeForm(self, 5, 100, 20+(initX+width)*0, initY, width, height, \
+                            '[r/min]', 0,  120, 12, 10, False)
+        self.gauge.gaugeForm(self, 3, 320, 20+(initX+width)*1, initY, width, height, \
+                            '[V]',     0,  500, 10, 10, False)
+        self.gauge.gaugeForm(self, 5, 3.5, 20+(initX+width)*2, initY, width, height, \
+                            '[A]',     0,    5, 10, 10, True)
+        self.gauge.gaugeForm(self, 3, 999, 20+(initX+width)*3, initY, width, height, \
+                            '[W]',     0, 2000, 10, 10, False)
 
         ################################################################################################
         # Show window
         ################################################################################################
         self.show()
-
 
 ########################################################################
 ## EXECUTE APP
